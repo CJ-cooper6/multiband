@@ -2,16 +2,60 @@ package utils
 
 import (
 	"bytes"
-	"os/exec"
+	"fmt"
+	"github.com/disintegration/imaging"
+	ffmpeg "github.com/u2takey/ffmpeg-go"
+	"io"
+	"os"
+	"path/filepath"
 )
 
-func GetFrame(inPath string, outPath string) error {
-	//首先生成 cmd 结构体,该结构体包含了很多信息，如执行命令的参数，命令的标准输入输出等
-	command := exec.Command("ffmpeg", "-y", "-i", inPath, "-vframes", "1", "-f", "image2", outPath)
-	//给标准输入以及标准错误初始化一个 buffer ，每条命令的输出位置可能是不一样的，
-	//比如有的命令会将输出放到 stdout ，有的放到 stderr
-	command.Stdout = &bytes.Buffer{}
-	command.Stderr = &bytes.Buffer{}
-	//执行命令，直到命令结束
-	return command.Run()
+// 设置视频文件所在的文件夹路径和保存图片的文件夹路径
+const videoFolder = "./video"
+const imageFolder = "images"
+
+//想法 ：启动时将Deal_video加入到init函数中，之后一直监控文件夹
+
+func Deal_video() {
+	//遍历文件夹中的所有视频文件
+	filepath.Walk(videoFolder, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if info.IsDir() {
+			return nil
+		}
+		fmt.Println(path)
+		//视频抽帧生成截图
+		reader := ExampleReadFrameAsJpeg(path, 5)
+		img, err := imaging.Decode(reader)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		err = imaging.Save(img, imageFolder+"/"+filepath.Base(path[:len(path)-4])+".jpg") //保存截图
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		//todo 处理视频元信息
+
+		return nil
+	})
+
+}
+
+//todo 监控文件夹
+
+func ExampleReadFrameAsJpeg(inFileName string, frameNum int) io.Reader {
+	buf := bytes.NewBuffer(nil)
+	err := ffmpeg.Input(inFileName).
+		Filter("select", ffmpeg.Args{fmt.Sprintf("gte(n,%d)", frameNum)}).
+		Output("pipe:", ffmpeg.KwArgs{"vframes": 1, "format": "image2", "vcodec": "mjpeg"}).
+		WithOutput(buf, os.Stdout).
+		Run()
+	if err != nil {
+		panic(err)
+	}
+	return buf
 }

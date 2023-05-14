@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>侧边栏</title>
+    <link rel="stylesheet" href="../css/jump.css">
+    <link rel="stylesheet" href="../dist/css/layui.css"    media="all">
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <!-- https://fontawesome.com/v5/search?s=solid%2Cbrands -->
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <h2>多波段视频监控系统</h2>
+            <ul>
+                <!-- <li><a href="#"><i class="fas fa-home"></i>主页</a></li> -->
+                <li><a href="./jump.html"><i class="fas fa-user"></i>监控画面</a></li>
+                <li><a href="./video.html"><i class="fas fa-address-card"></i>视频管理</a></li>
+                <!-- <li><a href="#"><i class="fas fa-project-diagram"></i>架构管理</a></li>
+                <li><a href="#"><i class="fas fa-blog"></i>公司简介管理</a></li>
+                <li><a href="#"><i class="fas fa-address-book"></i>内容管理</a></li>
+                <li><a href="#"><i class="fas fa-map-pin"></i>附加管理</a></li> -->
+            </ul>
+        </div>
+        <div class="main_content">
+            <div class="header"></div>
+            <div class="info">
+              <div style="border:1px solid black">
+              <video name="videoElement" id="videoElement" class="centeredVideo" controls muted autoplay width="512"
+                       height="576">
+                    Your browser is too old which doesn't support HTML5 video.
+                </video>
+            </div>
+            <div style="border:1px solid black">
+                <video name="videoElement2" id="videoElement2" class="centeredVideo" controls muted autoplay width="512"
+                        height="576">
+                    Your browser is too old which doesn't support HTML5 video.
+                </video>
+            </div>
+                <hr class="layui-border-red">
+                <video name="videoElement3" id="videoElement3" class="centeredVideo" controls muted autoplay width="512"
+                        height="576">
+                    Your browser is too old which doesn't support HTML5 video.
+                </video>
+                <video name="videoElement4" id="videoElement4" class="centeredVideo" controls muted autoplay width="512"
+                        height="576">
+                    Your browser is too old which doesn't support HTML5 video.
+                </video>
+            </div>
+        </div>
+    </div>
+    <script src="../js/flv.min.js"></script>
+    <script src="./dist/css/layui.js" charset="utf-8"></script>
+ 
+<script>
+    function start() {
+        if (flvjs.isSupported()) {
+            var videoElement = document.getElementById('videoElement');
+            var flvPlayer = flvjs.createPlayer({
+                type: 'flv',
+               url:'http://127.0.0.1:8081/live?port=1935&app=live1&stream=stream'
+            });
+            flvPlayer.attachMediaElement(videoElement);
+            flvPlayer.load();
+            flvPlayer.play();
+
+
+            var videoElement2 = document.getElementById('videoElement2');
+            var flvPlayer2 = flvjs.createPlayer({
+                type: 'flv',
+                url: 'http://127.0.0.1:8081/live?port=1935&app=live2&stream=stream'
+            });
+            flvPlayer2.attachMediaElement(videoElement2);
+            flvPlayer2.load();
+            flvPlayer2.play();
+
+
+
+            var videoElement3 = document.getElementById('videoElement3');
+            var flvPlayer3 = flvjs.createPlayer({
+                type: 'flv',
+                url: 'http://127.0.0.1:8081/live?port=1935&app=live2&stream=stream'
+            });
+            flvPlayer3.attachMediaElement(videoElement3);
+            flvPlayer3.load();
+            flvPlayer3.play();
+
+
+            var videoElement4 = document.getElementById('videoElement4');
+            var flvPlayer4 = flvjs.createPlayer({
+                type: 'flv',
+                url: 'http://127.0.0.1:8081/live?port=1935&app=live2&stream=stream'
+            });
+            flvPlayer4.attachMediaElement(videoElement4);
+            flvPlayer4.load();
+            flvPlayer4.play();
+        }
+    }
+ 
+    document.addEventListener('DOMContentLoaded', function () {
+        start();
+    });
+</script>
+ 
+</body>
+</html>

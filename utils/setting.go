@@ -16,9 +16,12 @@ var (
 	DbUser     string
 	DbPassWord string
 	DbName     string
+
+	VideoFolder string // 设置视频文件所在的文件夹路径和保存图片的文件夹路径
+	ImageFolder string
 )
 
-func init() {
+func Setting() {
 	file, err := ini.Load("./config/config.ini")
 	if err != nil {
 		fmt.Println("配置文件读取错误，检查文件路径：", err)
@@ -26,6 +29,7 @@ func init() {
 
 	LoadServer(file)
 	LoadDb(file)
+	LoadVideo(file)
 
 }
 
@@ -42,4 +46,9 @@ func LoadDb(file *ini.File) {
 	DbUser = file.Section("database").Key("Dbuser").MustString("root")
 	DbPassWord = file.Section("database").Key("DbPassWord").MustString("")
 	DbName = file.Section("database").Key("DbName").MustString("ACAT")
+}
+
+func LoadVideo(file *ini.File) {
+	VideoFolder = file.Section("video").Key("VideoFolder").MustString("")
+	ImageFolder = file.Section("video").Key("ImageFolder").MustString("")
 }

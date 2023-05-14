@@ -1,45 +1,29 @@
 package controller
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"multiband/dao"
+	"strconv"
 )
 
-type data struct {
-	Id       int    `json:"id"`
-	Username string `json:"username"`
-	ImgPath  string `json:"imgPath"`
-}
-
 func Hello(c *gin.Context) {
-	da := []data{
-		{
-			Id:       1,
-			Username: "zhangsan",
-			ImgPath:  "../imgs/1.png",
-		},
-		{
-			Id:       2,
-			Username: "lisi",
-			ImgPath:  "../imgs/2.png",
-		},
-		{
-			Id:       3,
-			Username: "lisi",
-		},
-		{
-			Id:       4,
-			Username: "lisi",
-		},
+	page, _ := strconv.Atoi(c.Query("page"))
+	limit, _ := strconv.Atoi(c.Query("limit"))
+
+	if page <= 0 {
+		page = 1
 	}
-	a, _ := json.Marshal(da)
-	fmt.Println(string(a))
+	meta, total, err := dao.GetVideoMeta(page, limit)
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	c.JSON(200, gin.H{
 		"code":  0,
 		"msg":   "",
-		"count": 5,
-		"data":  da,
+		"count": total,
+		"data":  meta,
 	})
 
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录注册页面</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <!-- <script src="./index.js"></script> -->
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="word">
+                多波段视频监控系统
+            </div>
+            <div class="form">
+                <div class="box">
+                    <div class="choose">
+                        <a href="#" id="comein">登录账号</a>
+                        <a href="#" id="regist">注册账号</a>
+                    </div>  
+                    <div class="login">
+                        <div class="form1">
+                            用户名：<input type="text" id="dlusername" placeholder="请输入用户名"  size="20" name="dlusername" ><br>
+                            密码：<input type="password" id="dlpassword" placeholder="请输入密码" size="20" name="dlpassword" ><br>
+                            <button class="denglv">登录</button>
+                        </div>
+                    </div>
+                    <div class="register">
+                        <div class="form2">
+                            用户名：<br><input type="text" id="zcusername" placeholder="请输入用户名" size="20" name="zcusername" ><br>
+                            密码：<br><input type="password" id="zcpassword" placeholder="请输入密码" size="20" name="zcpassword" ><br>
+                            确认密码：<br><input type="password" id="zcpassword-again" placeholder="请再次输入密码" size="20" name="zcpassword-again" οnclick="validate()"><br>
+                            <input type="submit" value="注册" class="zhuce"><br>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/index.js"></script>
+</body>
+</html>

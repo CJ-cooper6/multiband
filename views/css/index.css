@@ -1,0 +1,136 @@
+*{
+    margin: 0;
+    padding: 0;
+    background: url(../imgs/reg_bg_min.jpg) no-repeat no-repeat;
+    background-size: 100% 100%;
+    background-attachment:fixed;
+}
+.container{
+    width: 1110px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.container .word{
+    position: relative;
+    width: 600px;
+    height: 100px;
+    font-size: 50px;
+    color: #fff;
+    font-weight: bolder;
+    margin-top: 70px;
+    margin-left: 50px;
+    top:-30px;
+    left: 25%;
+}
+.form{
+    position: relative;
+    width: 477px;
+    height: 553px;
+    border: 3px solid #cccccc;
+    -moz-box-shadow:0 0 10px 10px rgb(199, 200, 202);
+    -webkit-box-shadow:0 0 10px 10px rgb(205, 206, 207);
+    box-shadow:0 0 10px 10px rgb(210, 211, 211);
+    border-radius: 1em;
+    margin: 90px 60px;  
+    top:60px;
+    left: -26.5%;
+}
+.box{
+    box-sizing: border-box;
+    width: 70%;
+    height: 80%;
+    margin: 0 auto;
+    
+}
+.choose{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+.choose a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+.choose a:hover{
+    color: rgb(200, 181, 11);
+}
+/* 登录 */
+.login{
+    box-sizing: border-box;
+    margin-top: 50px;
+    color: #fff;
+    font-size: 16px;
+    /* display: none; */
+}
+.login input{
+    height: 40px;
+    width: 95%;
+    margin: 10px 0;
+    margin-bottom: 35px;
+    padding: 0 10px;
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    background: #ccc;
+    outline: none;
+    cursor: pointer;
+    border-radius: 0.5em;
+}
+.login .denglv{
+    text-decoration: none;
+    outline: none;
+    text-align: center;
+    display: block;
+    margin-top: 30px;
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+    background: rgb(153, 122, 179);
+    border-radius: 0.5em;
+    border: rgb(148, 58, 233);
+    color: black;
+    font-size: 18px;
+    font-weight: bolder;
+    margin-left: 64px;
+}
+.login .denglv:hover{
+    color: #fff;
+}
+
+
+/* 注册 */
+.register{
+    box-sizing: border-box;
+    margin: 30px 0;
+    color: #fff;
+    font-size: 16px;
+    display: none;
+}
+.register input{
+    height: 40px;
+    width: 95%;
+    margin: 15px 0;
+    padding: 0 10px;
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    background: #ccc;
+    outline: none;
+    cursor: pointer;
+    border-radius: 0.5em;
+}
+.register .zhuce{
+    margin-top: 30px;
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+    background: rgb(122, 122, 179);
+    border: blueviolet;
+    font-size: 18px;
+    font-weight: bolder;
+    margin-left: 64px;
+}
+.register .zhuce:hover{
+    color: #fff;
+}

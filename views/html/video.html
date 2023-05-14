@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>侧边栏</title>
+    <link rel="stylesheet" href="../css/video.css">
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <link rel="stylesheet" href="../dist/css/layui.css"    media="all">
+
+    <style type="text/css">
+        .layui-table-cell{
+            height: auto!important;
+            white-space: normal;
+        }
+</style>
+    <!-- https://fontawesome.com/v5/search?s=solid%2Cbrands -->
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <h2>多波段视频监控系统</h2>
+            <ul>
+                <!-- <li><a href="#"><i class="fas fa-home"></i>主页</a></li> -->
+                <li><a href="./jump.html"><i class="fas fa-user"></i>监控画面</a></li>
+                <li><a href="./video.html"><i class="fas fa-address-card"></i>视频管理</a></li>
+                <!-- <li><a href="#"><i class="fas fa-project-diagram"></i>架构管理</a></li>
+                <li><a href="#"><i class="fas fa-blog"></i>公司简介管理</a></li>
+                <li><a href="#"><i class="fas fa-address-book"></i>内容管理</a></li>
+                <li><a href="#"><i class="fas fa-map-pin"></i>附加管理</a></li> -->
+            </ul>
+        </div>
+        <div class="main_content">
+            <div class="header"></div>
+            
+            <div class="main">
+                <table id="demo" lay-filter="test"></table>
+            </div>
+                
+        </div>
+    </div>
+    <script src="../dist/layui.js"></script>
+                    <script>
+                    layui.use('table', function(){
+                    var table = layui.table;
+                    
+                    //第一个实例
+                    table.render({
+                        elem: '#demo'
+                        ,height: 'full-170'
+                        ,skin: 'line'
+                        ,even: true //开启隔行背景
+                        ,size: 'lg' //大尺寸的表格
+                        ,url: 'http://127.0.0.1:8080/hello' //数据接口
+                        ,toolbar:true
+                        ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                                    layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                                    ,curr: 1 //设定初始在第 1 页
+                                    ,limit:10 //一页显示多少条
+                                    ,limits:[5,10]//每页条数的选择项
+                                    ,groups: 3 //只显示 2 个连续页码
+                                    ,first: "首页" //不显示首页
+                                    ,last: "尾页" //不显示尾页
+                                }
+                        ,cols: [[ //表头    
+                        {field: 'picture_location', title: '',width: 120, align: "center",templet:'#imgTpl'}
+                        ,{field: 'file_name', title: '名称',align:'center', width:320, sort: true}
+                        ,{field: 'extension', title: '扩展名',align:'center', width: 135, sort: true}
+                        ,{field: 'file_size', title: '大小',align:'center', width: 135, sort: true}
+                        ,{fixed: 'right', width:300, align:'center', toolbar: '#barDemo'}
+                        ]]
+                    });
+                    
+                    });
+                    </script>
+
+            <script type="text/html" id="imgTpl">
+                <img src="{{ d.picture_location }}"/>
+                </script>
+
+            <script type="text/html" id="barDemo">
+                    <a class="layui-btn layui-btn-xs" lay-event="detail" href="http://127.0.0.1:8080/hello?file_name={{d.ID}}">播放</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="edit"   href="http://127.0.0.1:8080/hello?file_name={{d.ID}}">下载</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" href="http://127.0.0.1:8080/hello?file_name={{d.ID}}">删除</a>
+                  </script>
+</body>
+</html>

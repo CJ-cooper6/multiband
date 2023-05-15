@@ -1,47 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <title>table模块快速使用</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>侧边栏</title>
+  <link rel="stylesheet" href="../css/jump.css">
   <link rel="stylesheet" href="../dist/css/layui.css" media="all">
+  <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
 </head>
+
 <body>
- 
-<table id="demo" lay-filter="test"></table>
- 
-<script src="../dist/layui.js"></script>
-<script>
-layui.use('table', function(){
-  var table = layui.table;
-  
-  //第一个实例
-  table.render({
-    elem: '#demo'
-    ,height: 312
-    ,url: 'http://127.0.0.1:8080/hello' //数据接口
-    ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
-                ,curr: 2 //设定初始在第 5 页
-                ,limit:2 //一页显示多少条
-                ,limits:[2,4]//每页条数的选择项
-                ,groups: 2 //只显示 2 个连续页码
-                ,first: "首页" //不显示首页
-                ,last: "尾页" //不显示尾页
-            }
-    ,cols: [[ //表头    
-      {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
-      ,{field: 'username', title: '用户名', width:80}
-      ,{field: 'sex', title: '性别', width:80, sort: true}
-      ,{field: 'city', title: '城市', width:80} 
-      ,{field: 'sign', title: '签名', width: 177}
-      ,{field: 'experience', title: '积分', width: 80, sort: true}
-      ,{field: 'score', title: '评分', width: 80, sort: true}
-      ,{field: 'classify', title: '职业', width: 80}
-      ,{field: 'wealth', title: '财富', width: 135, sort: true}
-    ]]
-  });
-  
-});
-</script>
+  <div class="wrapper">
+    <div class="sidebar">
+      <h2>多波段视频监控系统</h2>
+      <ul>
+        <li><a href="./jump.html"><i class="fas fa-user"></i>监控画面</a></li>
+        <li><a href="./video.html"><i class="fas fa-address-card"></i>视频管理</a></li>
+      </ul>
+    </div>
+    <div class="main_content">
+      <div class="header"></div>
+      <div class="info">
+        <div class="video-container">
+          <video name="videoElement" id="videoElement" class="centeredVideo" controls muted autoplay>
+            Your browser is too old which doesn't support HTML5 video.
+          </video>
+        </div>
+        <div class="video-container">
+          <video name="videoElement2" id="videoElement2" class="centeredVideo" controls muted autoplay>
+            Your browser is too old which doesn't support HTML5 video.
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../js/flv.min.js"></script>
+  <script src="./dist/css/layui.js" charset="utf-8"></script>
+
+  <script>
+    function start() {
+      if (flvjs.isSupported()) {
+        var videoElement = document.getElementById('videoElement');
+        var flvPlayer = flvjs.createPlayer({
+          type: 'flv',
+          url: 'http://127.0.0.1:8081/live?port=1935&app=live2&stream=stream'
+        });
+        flvPlayer.attachMediaElement(videoElement);
+        flvPlayer.load();
+        flvPlayer.play();
+
+        var videoElement2 = document.getElementById('videoElement2');
+        var flvPlayer2 = flvjs.createPlayer({
+          type: 'flv',
+          url: 'http://127.0.0.1:8081/live?port=1935&app=live2&stream=stream'
+        });
+        flvPlayer2.attachMediaElement(videoElement2);
+        flvPlayer2.load();
+        flvPlayer2.play();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      start();
+    });
+  </script>
+
 </body>
+
 </html>

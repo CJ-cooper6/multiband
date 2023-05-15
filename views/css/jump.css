@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -11,18 +11,18 @@
 }
 
 
-body{
+body {
     background-color: #f3f5f9;
 }
 
-.wrapper{
+.wrapper {
     /* 弹性布局 */
     display: flex;
     /* 相对定位 */
     position: relative;
 }
 
-.wrapper .sidebar{
+.wrapper .sidebar {
     width: 200px;
     height: 100%;
     background-color: #4b4276;
@@ -31,7 +31,7 @@ body{
     position: fixed;
 }
 
-.wrapper .sidebar h2{
+.wrapper .sidebar h2 {
     color: #fff;
     text-transform: uppercase;
     text-align: center;
@@ -39,52 +39,71 @@ body{
 }
 
 
-.wrapper .sidebar ul li{
+.wrapper .sidebar ul li {
     padding: 15px;
     border-bottom: 1px solid #bdb8d7;
-    border-bottom: 1px solid rgba(0, 0, 0,0.05);
-    border-top: 1px solid rgba(255, 255, 255,0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.wrapper .sidebar ul li:hover{
+.wrapper .sidebar ul li:hover {
     background-color: #594f8d;
 }
 
 
-.wrapper .sidebar ul li a{
+.wrapper .sidebar ul li a {
     color: #bdb8d7;
     display: block;
 }
 
-.wrapper .sidebar ul li:hover a{
+.wrapper .sidebar ul li:hover a {
     color: #fff;
 }
 
-.wrapper .sidebar ul li a .fas{
+.wrapper .sidebar ul li a .fas {
     width: 25px;
 }
 
 
-.wrapper .main_content{
+.wrapper .main_content {
     width: 100%;
     margin-left: 200px;
 }
-.wrapper .main_content .header{
+
+.wrapper .main_content .header {
     padding: 41px;
     background: #ffffff;
-    font-size:30px;
-    font-weight:bold;
+    font-size: 30px;
+    font-weight: bold;
     color: #535050;
     border-bottom: 1px solid #e0e4e8;
 }
 
+.wrapper .main_content .info .video-container{
+    width: 45%;
+    margin-bottom: 15px;
+    margin-right: 10px;
+  }
 
-.wrapper .main_content .info{
-    margin: 20px;
-    color: #717171;
-    line-height: 25px;
+
+@media (max-width: 768px) {
+    .wrapper .main_content .info .video-container {
+        width: 100%;
+    }
 }
 
-.wrapper .main_content .info div{
-    margin-bottom: 20px;
+.wrapper .main_content .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 200px;
 }
+
+.video-container video {
+    width: 100%;
+    height: auto;
+    border-radius: 7px;
+    display: block;
+  }
+

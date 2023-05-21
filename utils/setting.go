@@ -17,8 +17,8 @@ var (
 	DbPassWord string
 	DbName     string
 
-	VideoFolder string // 设置视频文件所在的文件夹路径和保存图片的文件夹路径
-	ImageFolder string
+	VideoFolder1 string // 设置视频文件所在的文件夹路径和保存图片的文件夹路径
+	ImageFolder1 string
 )
 
 func Setting() {
@@ -49,6 +49,6 @@ func LoadDb(file *ini.File) {
 }
 
 func LoadVideo(file *ini.File) {
-	VideoFolder = file.Section("video").Key("VideoFolder").MustString("")
-	ImageFolder = file.Section("video").Key("ImageFolder").MustString("")
+	VideoFolder1 = file.Section("video").Key("VideoFolder1").MustString("")
+	ImageFolder1 = file.Section("video").Key("ImageFolder1").MustString("")
 }

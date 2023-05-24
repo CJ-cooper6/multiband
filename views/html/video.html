@@ -86,16 +86,28 @@
                 var checkStatus = table.checkStatus(options.id); // 获取选中行相关数据
                 console.log(obj); // 查看对象所有成员
                 // 根据不同的事件名进行相应的操作
-                switch (obj.event) { // 对应模板元素中的 lay-event 属性值
-                    case 'play':
-                        layer.msg('添加');
-                        break;
-                    case 'download':
-                        layer.msg('下载');
-                        break;
-                    case 'update':
-                        layer.msg('删除');
-                        break;
+                if (obj.event == 'del') { // 对应模板元素中的 lay-event 属性值
+                    $.ajax({
+                        url: "http://127.0.0.1:8080/hello?page=1&limit=10",
+                        type: "get",
+                        dataType: "json",
+                        headers: { 'Content-Type': 'application/json;charset=utf-8' }, //接口json格式
+                        success: function (msg) {
+                            console.log(msg);
+                            if (msg.msg==200) {
+                                //删除这一行
+                                obj.del();
+                                layer.msg("删除成功", {icon: 6});
+                            } else {
+                                layer.msg("删除失败", {icon: 5});
+                            }
+                        },
+                        error: function (data) {
+                            layer.alert(JSON.stringify(data), {
+                                title: data
+                            });
+                        }
+                    });
                 };
             });
 
@@ -112,14 +124,27 @@
                         shadeClose: true,
                         content: '/Users/cooper/go/src/multiband/video/input.mp4' // video 地址
                     });
-                    layer.msg('点击遮罩区域可关闭',{
-                        time:500
+                    layer.msg('点击遮罩区域可关闭', {
+                        time: 500
                     });
-                    
                 },
-
             });
         });
+
+        var $ = layui.$, active = {
+            reload: function () {
+                var demoReload = $('#demoReload');
+
+                //执行重载
+                table.reload('idTest', {
+                    where: {
+                        key: {
+                            field: demoReload.val()
+                        }
+                    }
+                });
+            }
+        };
     </script>
 
     <script type="text/html" id="imgTpl">

@@ -21,7 +21,7 @@ func Hello(c *gin.Context) {
 
 	c.JSON(200, gin.H{
 		"code":  0,
-		"msg":   "",
+		"msg":   200,
 		"count": total,
 		"data":  meta,
 	})

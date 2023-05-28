@@ -1,0 +1,1 @@
+ffmpeg -f dshow -i video="Chicony USB2.0 Camera" -f dshow -i audio="麦克风 (Realtek High Definition Audio)" -vcodec h264 -pix_fmt yuv420p -preset ultrafast -tune:v zerolatency -f flv rtmp://127.0.0.1/live2/stream

@@ -28,11 +28,13 @@
                     <video name="videoElement" id="videoElement" class="centeredVideo" controls muted autoplay>
                         Your browser is too old which doesn't support HTML5 video.
                     </video>
+                    <div class="video-text">live1</div>
                 </div>
                 <div class="video-container">
                     <video name="videoElement2" id="videoElement2" class="centeredVideo" controls muted autoplay>
                         Your browser is too old which doesn't support HTML5 video.
                     </video>
+                    <div class="video-text">live2</div>
                 </div>
             </div>
         </div>
@@ -46,7 +48,7 @@
                 var videoElement = document.getElementById('videoElement');
                 var flvPlayer = flvjs.createPlayer({
                     type: 'flv',
-                    url: 'http://127.0.0.1:8081/live?port=1935&app=live2&stream=stream'
+                    url: 'http://127.0.0.1:8081/live?port=1935&app=live1&stream=stream'
                 });
                 flvPlayer.attachMediaElement(videoElement);
                 flvPlayer.load();

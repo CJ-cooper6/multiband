@@ -29,7 +29,7 @@ func IntDb() {
 		fmt.Println("连接数据库出错：", err)
 	}
 
-	_ = Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8;").AutoMigrate(&VideoMeta{})
+	_ = Db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8;").AutoMigrate(&VideoMeta{}, &User{})
 
 	sqlDB, _ := Db.DB()
 	//设置连接池u中的最大闲置连接数

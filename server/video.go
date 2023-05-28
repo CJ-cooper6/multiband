@@ -12,12 +12,14 @@ import (
 	"multiband/model"
 	"multiband/utils"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"time"
 )
 
 func InitDealVideo() {
 	go DealVideo(utils.VideoFolder1, utils.ImageFolder1)
+	go DealVideo(utils.VideoFolder2, utils.ImageFolder2)
 }
 
 //生成视频元信息并存储
@@ -135,5 +137,24 @@ func CreateVideoInfo(path, VideoFolder, ImageFolder string) error {
 	videometa.FileSha1 = utils.FileSha1(file)
 	fmt.Printf("%#v", videometa)
 	dao.SaveVideoMeta(videometa)
+	return nil
+}
+
+func TransVideo(inputFile, outputFile string) error {
+	// 构建FFmpeg命令行参数
+	ffmpegCmd := exec.Command("ffmpeg", "-i", inputFile, outputFile)
+	fmt.Printf("1111111%s\n%s\n1111111", inputFile, outputFile)
+	// 设置输出和错误输出
+	ffmpegCmd.Stdout = os.Stdout
+	ffmpegCmd.Stderr = os.Stderr
+
+	// 执行FFmpeg命令
+	err := ffmpegCmd.Run()
+	if err != nil {
+		log.Fatalf("转换视频失败: %s", err)
+		return err
+	}
+
+	log.Println("视频转换完成！")
 	return nil
 }

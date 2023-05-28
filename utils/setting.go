@@ -19,6 +19,9 @@ var (
 
 	VideoFolder1 string // 设置视频文件所在的文件夹路径和保存图片的文件夹路径
 	ImageFolder1 string
+	VideoFolder2 string
+	ImageFolder2 string
+	Trans        string
 )
 
 func Setting() {
@@ -51,4 +54,7 @@ func LoadDb(file *ini.File) {
 func LoadVideo(file *ini.File) {
 	VideoFolder1 = file.Section("video").Key("VideoFolder1").MustString("")
 	ImageFolder1 = file.Section("video").Key("ImageFolder1").MustString("")
+	VideoFolder2 = file.Section("video").Key("VideoFolder2").MustString("")
+	ImageFolder2 = file.Section("video").Key("ImageFolder2").MustString("")
+	Trans = file.Section("video").Key("Trans").MustString("")
 }

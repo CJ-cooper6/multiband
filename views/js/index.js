@@ -44,7 +44,7 @@ zhuce.onclick = function () {
         // console.log(formdata.get("zcpassword"));
         
         var xhr = new XMLHttpRequest(); 
-        xhr.open("post", "/regist", true);
+        xhr.open("post", "http://127.0.0.1:8080/regist", true);
         xhr.send(data);
         // xhr.send(formdata);//发送数据
         xhr.onreadystatechange = function () {
@@ -70,6 +70,39 @@ zhuce.onclick = function () {
             } else {
                 console.log("请求不成功" + xhr.status);
             }
+        }
+    }
+}
+var denglv = document.querySelector('.denglv');
+denglv.onclick = function () {
+    console.log('111');
+    // denglv.href = "jump.html";
+    var dlusername = document.getElementById('dlusername').value;
+    var dlpassword = document.getElementById('dlpassword').value;
+    var obj = {};
+    obj.dlusername = dlusername;
+    obj.dlpassword = dlpassword;
+    var data = JSON.stringify(obj);
+    // var formdata = new FormData();
+    // formdata.append("dlusername", dlusername);
+    // formdata.append("dlpassword", dlpassword);
+    var xhr = new XMLHttpRequest();
+    xhr.open("post", "http://127.0.0.1:8080/login", true);
+    xhr.send(data);
+    // xhr.send(formdata);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status >= 200) {
+            console.log(xhr.responseText);
+            var obj=JSON.parse(xhr.responseText);
+            if (obj.flag == 1) {
+                window.location.href="jump.html";
+                // self.location.href = "";
+            } else {
+                alert('登录失败！');
+            }
+
+        } else {
+            console.log("请求不成功" + xhr.status);
         }
     }
 }

@@ -20,7 +20,7 @@
 </head>
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-on="play">播放</a>
+    <a class="layui-btn layui-btn-xs" lay-event="play">播放</a>
     <a class="layui-btn layui-btn-xs" lay-event="download">下载</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -52,6 +52,7 @@
     <script>
         layui.use('table', function () {
             var table = layui.table;
+            var laypage = layui.laypage;
             var util = layui.util;
 
             //第一个实例
@@ -61,73 +62,151 @@
                 , skin: 'line'
                 , even: true //开启隔行背景
                 , size: 'lg' //大尺寸的表格
-                , url: 'http://127.0.0.1:8080/hello' //数据接口
+                , url: 'http://127.0.0.1:8080/user/hello' //数据接口
                 , toolbar: true
                 , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                     layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
                     , curr: 1 //设定初始在第 1 页
                     , limit: 10 //一页显示多少条
                     , limits: [5, 10]//每页条数的选择项
-                    , groups: 3 //只显示 2 个连续页码
+                    , groups: 5 //只显示 5 个连续页码
                     , first: "首页" //不显示首页
                     , last: "尾页" //不显示尾页
                 }
-                , cols: [[ //表头    
+                , cols: [[ //表头
                     { field: 'picture_location', title: '', width: 120, align: "center", templet: '#imgTpl' }
                     , { field: 'file_name', title: '名称', align: 'center', width: 320, sort: true }
-                    , { field: 'extension', title: '扩展名', align: 'center', width: 135, sort: true }
-                    , { field: 'file_size', title: '大小', align: 'center', width: 135, sort: true }
+                    , { field: 'source', title: '视频源', align: 'center', width: 135, sort: true }
+                    , { field: 'file_size', title: '文件大小(B)', align: 'center', width: 135, sort: true }
                     , { fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo' }
                 ]]
             });
+        });
+
+        function getFormLimitData(curnum,count){
+            layui.use('table', function () {
+                var table = layui.table;
+                var util = layui.util;
+
+                //第一个实例
+                table.render({
+                    elem: '#demo'
+                    , height: 'full-200'
+                    , skin: 'line'
+                    , even: true //开启隔行背景
+                    , size: 'lg' //大尺寸的表格
+                    , url: 'http://127.0.0.1:8080/user/hello' //数据接口
+                    , toolbar: true
+                    , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                        layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                        , curr: curnum //设定初始在第 1 页
+                        , limit: count //一页显示多少条
+                        , limits: [5, 10]//每页条数的选择项
+                        , groups: 5 //只显示 5 个连续页码
+                        , first: "首页" //不显示首页
+                        , last: "尾页" //不显示尾页
+                    }
+                    , cols: [[ //表头
+                        { field: 'picture_location', title: '', width: 120, align: "center", templet: '#imgTpl' }
+                        , { field: 'file_name', title: '名称', align: 'center', width: 320, sort: true }
+                        , { field: 'source', title: '视频源', align: 'center', width: 135, sort: true }
+                        , { field: 'file_size', title: '文件大小(B)', align: 'center', width: 135, sort: true }
+                        , { fixed: 'right', width: 300, align: 'center', toolbar: '#barDemo' }
+                    ]]
+                    ,jump: function(obj, first){
+                        //obj包含了当前分页的所有参数，比如：
+                        console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                        console.log(obj.limit); //得到每页显示的条数
+
+                        //首次不执行
+                        if(!first){
+                            //do something
+                            curnum = obj.curr;
+                            limitcount= obj.limit;
+                            getFormLimitData(curnum,limitcount);
+
+                        }
+                    }
+                });
+            });
+        }
+
+        layui.use('table', function () {
+            var table = layui.table;
 
             table.on('tool(test)', function (obj) {
                 var options = obj.config; // 获取当前表格属性配置项
                 var checkStatus = table.checkStatus(options.id); // 获取选中行相关数据
                 console.log(obj); // 查看对象所有成员
-                // 根据不同的事件名进行相应的操作
-                if (obj.event == 'del') { // 对应模板元素中的 lay-event 属性值
-                    $.ajax({
-                        url: "http://127.0.0.1:8080/hello?page=1&limit=10",
-                        type: "get",
-                        dataType: "json",
-                        headers: { 'Content-Type': 'application/json;charset=utf-8' }, //接口json格式
-                        success: function (msg) {
-                            console.log(msg);
-                            if (msg.msg==200) {
-                                //删除这一行
-                                obj.del();
-                                layer.msg("删除成功", {icon: 6});
-                            } else {
-                                layer.msg("删除失败", {icon: 5});
+                switch (obj.event) {
+                    case 'del':
+                        $.ajax({
+                            url: "http://127.0.0.1:8080/user/del?id=" + obj.data.id,
+                            type: "post",
+                            dataType: "json",
+                            headers: {'Content-Type': 'application/json;charset=utf-8'}, //接口json格式
+                            success: function (msg) {
+                                console.log(msg);
+                                if (msg.msg == 200) {
+                                    //删除这一行
+                                    obj.del();
+                                    layer.msg("删除成功", {icon: 6});
+                                    console.log(obj.config.page.curr);
+                                    table.reload('demo', {
+                                        page: {
+                                            curr: 1
+                                        }
+                                    });
+                                } else {
+                                    layer.msg("删除失败", {icon: 5});
+                                }
+                            },
+                            error: function (data) {
+                                layer.alert(JSON.stringify(data), {
+                                    title: data
+                                });
                             }
-                        },
-                        error: function (data) {
-                            layer.alert(JSON.stringify(data), {
-                                title: data
-                            });
-                        }
-                    });
-                };
-            });
+                        });
+                        break
+                    case 'download':
+                        window.location.href = "http://127.0.0.1:8080/user/download?id=" + obj.data.id
 
-
-            //弹出层，弹出多媒体
-            util.on('lay-on', {
-                'play': function () {
-                    layer.open({
-                        type: 2,
-                        title: false,
-                        area: ['630px', '360px'],
-                        shade: 0.8,
-                        closeBtn: 0,
-                        shadeClose: true,
-                        content: '/Users/cooper/go/src/multiband/video/input.mp4' // video 地址
-                    });
-                    layer.msg('点击遮罩区域可关闭', {
-                        time: 500
-                    });
-                },
+                        break
+                    case 'play':
+                        $.ajax({
+                            url: "http://127.0.0.1:8080/user/play?id=" + obj.data.id,
+                            type: "post",
+                            dataType: "json",
+                            headers: {'Content-Type': 'application/json;charset=utf-8'}, //接口json格式
+                            success: function (msg) {
+                                console.log(msg);
+                                if (msg.msg == 200) {
+                                    //播放
+                                    layer.open({
+                                        type: 2,
+                                        title: false,
+                                        area: ['630px', '360px'],
+                                        shade: 0.8,
+                                        closeBtn: 0,
+                                        shadeClose: true,
+                                        content: msg.path // video 地址
+                                    });
+                                    layer.msg('点击遮罩区域可关闭', {
+                                        time: 500
+                                    });
+                                    console.log(obj.config.page.curr);
+                                } else {
+                                    layer.msg("出错了", {icon: 5});
+                                }
+                            },
+                            error: function (data) {
+                                layer.alert(JSON.stringify(data), {
+                                    title: data
+                                });
+                            }
+                        });
+                        break
+                }
             });
         });
 
@@ -136,7 +215,7 @@
                 var demoReload = $('#demoReload');
 
                 //执行重载
-                table.reload('idTest', {
+                table.reload('demo', {
                     where: {
                         key: {
                             field: demoReload.val()

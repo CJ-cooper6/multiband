@@ -83,6 +83,9 @@ body {
     width: 45%;
     margin-bottom: 15px;
     margin-right: 10px;
+    /*border: 8px solid #ccc;*/
+    /*border-radius: 10px;*/
+    /*overflow: hidden;*/
   }
 
 
@@ -97,13 +100,19 @@ body {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: 200px;
+    margin-top: 175px;
 }
 
 .video-container video {
     width: 100%;
     height: auto;
-    border-radius: 7px;
     display: block;
   }
+
+.video-text {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
 

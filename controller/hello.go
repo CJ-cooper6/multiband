@@ -14,7 +14,7 @@ func Hello(c *gin.Context) {
 	if page <= 0 {
 		page = 1
 	}
-	meta, total, err := dao.GetVideoMeta(page, limit)
+	meta, total, err := dao.GetVideoList(page, limit)
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -17,6 +17,11 @@ import (
 	"time"
 )
 
+var Sourcemap = map[string]string{
+	"live1": "红外光",
+	"live2": "可见光",
+}
+
 func InitDealVideo() {
 	go DealVideo(utils.VideoFolder1, utils.ImageFolder1)
 	go DealVideo(utils.VideoFolder2, utils.ImageFolder2)
@@ -119,7 +124,7 @@ func CreateVideoInfo(path, VideoFolder, ImageFolder string) error {
 		Location:         path,
 		Extension:        filepath.Ext(path),
 		Picture_Location: ImageFolder + "/" + filepath.Base(path[:len(path)-4]) + ".jpg",
-		Source:           filepath.Base(VideoFolder),
+		Source:           Sourcemap[filepath.Base(VideoFolder)],
 	}
 	fi, err := os.Stat(path)
 	if err != nil {

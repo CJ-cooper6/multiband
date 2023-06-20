@@ -24,6 +24,15 @@ func GetVideoList(page, limit int) ([]model.VideoMeta, int64, error) {
 	return meta, total, nil
 }
 
+func GetVideoallList() ([]model.VideoMeta, int64, error) {
+	var meta []model.VideoMeta
+	var total int64
+	err := model.Db.Find(&meta).Error
+	if err != nil {
+		return meta, 0, err
+	}
+	return meta, total, nil
+}
 func DelVideoMeta(id int) error {
 
 	err := model.Db.Where("id = ?", id).Delete(&model.VideoMeta{}).Error
